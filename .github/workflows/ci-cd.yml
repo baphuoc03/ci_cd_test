@@ -41,6 +41,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set environment by branch
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+          else
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+          fi 
+
       # 5. Login Docker Hub
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -53,8 +61,8 @@ jobs:
 
       # 6. Build Docker image
       - name: Build Docker image
-        run: docker build -t baphuoc03/spring-boot-app:latest .
+        run: docker build -t baphuoc03/spring-boot-app:${ENVIRONMENT} .
 
       # 7. Push Docker image
       - name: Push to Docker Hub
-        run: docker push baphuoc03/spring-boot-app:latest
+        run: docker build -t baphuoc03/spring-boot-app:${ENVIRONMENT} .
