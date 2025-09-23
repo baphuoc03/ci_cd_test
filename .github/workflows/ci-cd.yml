@@ -61,8 +61,8 @@ jobs:
 
       # 6. Build Docker image
       - name: Build Docker image
-        run: docker build -t baphuoc03/spring-boot-app:${ENVIRONMENT} .
+        run: docker build -t baphuoc03/spring-boot-app:${ENVIRONMENT}
 
       # 7. Push Docker image
       - name: Push to Docker Hub
-        run: docker build -t baphuoc03/spring-boot-app:${ENVIRONMENT} .
+        run: docker push baphuoc03/spring-boot-app:${ENVIRONMENT}
